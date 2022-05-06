@@ -1,1 +1,1 @@
-# Bienvenidos al repositorio de Wall-E :smile:
+# Bienvenidos al repositorio de Wall-E
