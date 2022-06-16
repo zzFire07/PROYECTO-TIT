@@ -37,6 +37,7 @@ void setup() {
   pinMode(12, OUTPUT); // LED VERDE
   pinMode(11, OUTPUT); // ALARMA
   pinMode(10, OUTPUT); // BOTON
+  pinMode(9, OUTPUT); // MOTOR DC
   servo_tolva.attach(1);
   servo_varilla.attach(2);
   servo_contenedor.attach(3);
