@@ -53,7 +53,10 @@ if (sensor == 0) {
     while (sensor == 0) {
         digitalWrite(13, HIGH);
         digitalWrite(12, LOW);
-        digitalWrite(11, HIGH);
+        analogWrite(11, 180);
+        delay(90);
+        analogWrite(pinBuzzer, 0);
+        delay(90);
   }
   
   if (sensor = grupo1) {
@@ -155,7 +158,10 @@ if (sensor == 0) {
   if (contador_tapas_1 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_1 = 0;
@@ -163,7 +169,10 @@ if (sensor == 0) {
    if (contador_tapas_2 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_2 = 0;
@@ -171,7 +180,10 @@ if (sensor == 0) {
     if (contador_tapas_3 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_3 = 0;
@@ -179,7 +191,10 @@ if (sensor == 0) {
     if (contador_tapas_4 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_4 = 0;
@@ -187,7 +202,10 @@ if (sensor == 0) {
     if (contador_tapas_5 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_5 = 0;
@@ -195,7 +213,10 @@ if (sensor == 0) {
     if (contador_tapas_6 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_6 = 0;
@@ -203,7 +224,10 @@ if (sensor == 0) {
     if (contador_tapas_7 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_7 = 0;
@@ -211,7 +235,10 @@ if (sensor == 0) {
     if (contador_tapas_8 == 2000) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
-          digitalWrite(11, HIGH);
+          analogWrite(pinBuzzer, salida);
+          delay(200);
+          analogWrite(pinBuzzer, 0);
+          delay(200);
           digitalWrite(12, LOW);
           }
       contador_tapas_8 = 0;
