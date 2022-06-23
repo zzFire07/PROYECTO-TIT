@@ -11,10 +11,7 @@ int pos = 0; // VARIABLE DE MOVIMIENTO DE LOS SERVOS VARILLA Y CONTENEDOR.
 int open = 0; // MOVIMIENTO PARA ABRIR FLUJO DE TAPAS EN LA TOLVA
 int close = 180; // MOVIMIENTO PARA CERRAR FLUJO DE TAPAS EN LA TOLVA
 
-float grupo1 = 1; // "rojo"
 float grupo2 = 2; // "amarillo"
-float grupo3 = 3; // "azul"
-float grupo4 = 4; // "verde"
 float grupo5 = 5; // "blanco"
 float grupo6 = 6; // "gris"
 float grupo7 = 7; // "negro"
@@ -166,7 +163,7 @@ void loop() {
       contador_tapas_3 +=1;
       Serial.println("TAPITA ROJA CLASIFICADA");
   }
-  if (sensor = grupo4) {
+  if (sensor = grupo7) {
      for (pos = 0; pos <= grados_canasto_4; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -180,7 +177,7 @@ void loop() {
      delay(800);
       contador_tapas_4 +=1;
   }
-  if (sensor = grupo5) {
+  if (sensor = grupo7) {
      for (pos = 0; pos <= grados_canasto_1; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -194,7 +191,7 @@ void loop() {
      delay(800);
       contador_tapas_5 +=1;
   }
-  if (sensor = grupo6) {
+  if (sensor = grupo7) {
      for (pos = 0; pos <= grados_canasto_1; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
