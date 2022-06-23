@@ -1,0 +1,9 @@
+  void setup() {
+  pinMode(11, OUTPUT); // PIN CONECTADO AL BUZZER
+  }
+  void loop() {
+  digitalWrite(12, 200); // EL SEGUNDO PARAMETRO CORRESPONDE A LA FRECUENCIA. EL VOLUMEN DEPENDE DEL VOLTAJE RECIBIDO (SE PUEDE DISMINUIR CON RESISTENCIAS).
+  delay(100); // ESPERA 0.1s
+  digitalWrite(12, 0); // PARA APAGA EL BUZZER
+  delay(100); 
+  }
