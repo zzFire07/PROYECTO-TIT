@@ -1,6 +1,9 @@
 //---- IMPORTACION DE LIBRERIAS ----//
 #include "Adafruit_TCS34725.h"
 #include <Servo.h>
+#include <Stepper.h>
+
+#define STEPS 100
 
 //---- ASIGNANDO LOS SERVOS ----//
 Servo servo_tolva;
@@ -17,14 +20,16 @@ float grupo6 = 6; // "gris"
 float grupo7 = 7; // "negro"
 
 int sensor = 0;
-//---- VARIABLES CON LOS GRADOS PARA EL CORRESPONDIENTE CANASTO ----//
+//---- VARIABLES PARA MOVIMIENTO DE LOS MOTORES ----//
 int grados_canasto_1 = 11;
 int grados_canasto_2 = 33;
 int grados_canasto_3 = 55;
 int grados_canasto_4 = 77;
 int grados_canasto_5 = 99;
 int grados_canasto_6 = 121;
-int grados_canasto_7 = 143;
+int grados_canasto_7 = 143; //PARA LOS SERVOS
+
+int giro_completo = 2048; //MOTOR PAP
 
 //----- VARIABLES PARA CONTAR LAS TAPAS EN LOS CONTENEDORES ------//
 int contador_tapas_1 = 0;
@@ -51,12 +56,18 @@ int pinservo_contenedor = 3;
 int cerogrados1 = 350;
 int cientochentagrados1 = 2350;
 
+//----ASIGNACION MOTOR PAP----//
+Stepper stepper(STEPS, 6, 7, 8, 9);
+
 void setup() {
   //--ASIGNO PIN A LED, BOTON Y MOTOR DC--//
   pinMode(13, OUTPUT); // LED ROJO
   pinMode(12, OUTPUT); // LED VERDE
   pinMode(10, OUTPUT); // BOTON
   pinMode(9, OUTPUT); // MOTOR DC
+
+  //----ESTABLEZCO VELOCIDAD MOTOR PAP----//
+  stepper.setSpeed(250);
   
   //--ASIGNO PIN A LOS SERVOS--//
   servo_tolva.attach(1);
@@ -107,7 +118,7 @@ void loop() {
         float g = green; g /= sum;
         int verde = g*100;
         float b = blue; b /= sum;
-        int azul = b*100;d
+        int azul = b*100;
         
         digitalWrite(13, HIGH);
         digitalWrite(12, LOW);
@@ -118,6 +129,8 @@ void loop() {
   }
   
   if ((rojo > 43 and rojo < 90) and (verde > 100 and g < 115) and (azul > 100 and azul < 160)) { // CHEQUEA COLOR AZUL
+    stepper.step(giro_completo);
+    delay(100);
      for (pos = 0; pos <= grados_canasto_1; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -133,6 +146,8 @@ void loop() {
       Serial.println("TAPITA AZUL CLASIFICADA");
   }
   if ((rojo > 50 and rojo < 100) and (verde > 130 and g < 180) and (azul > 65 and azul < 75)) { // CHEQUEA COLOR VERDE
+    stepper.step(giro_completo);
+    delay(100);
      for (pos = 0; pos <= grados_canasto_2; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -148,6 +163,8 @@ void loop() {
       Serial.println("TAPITA VERDE CLASIFICADA");
   }
   if ((rojo > 230 and rojo < 255) and (verde > 20 and g < 40) and (azul > 25 and azul < 35)) { // CHEQUEA COLOR ROJO
+    stepper.step(giro_completo);
+    delay(100);
      for (pos = 0; pos <= grados_canasto_3; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -163,6 +180,8 @@ void loop() {
       Serial.println("TAPITA ROJA CLASIFICADA");
   }
   if (sensor = grupo7) {
+    stepper.step(giro_completo);
+    delay(100);
      for (pos = 0; pos <= grados_canasto_4; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -177,6 +196,8 @@ void loop() {
       contador_tapas_4 +=1;
   }
   if (sensor = grupo7) {
+    stepper.step(giro_completo);
+    delay(100);
      for (pos = 0; pos <= grados_canasto_1; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -191,6 +212,8 @@ void loop() {
       contador_tapas_5 +=1;
   }
   if (sensor = grupo7) {
+    stepper.step(giro_completo);
+    delay(100);
      for (pos = 0; pos <= grados_canasto_1; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -205,6 +228,8 @@ void loop() {
       contador_tapas_6 +=1;
   }
   if (sensor = grupo7) {
+    stepper.step(giro_completo);
+    delay(100);
      for (pos = 0; pos <= grados_canasto_1; pos += 1) {
     servo_varilla.write(pos);    
     servo_contenedor.write(180-pos);
@@ -219,8 +244,10 @@ void loop() {
       contador_tapas_7 +=1;
   }
   else {
+
      //MOTOR PASO A PASO GIRA PARA EL OTRO SENTIDO//
-     delay(400);
+      stepper.step(-giro_completo);
+       delay(100);
       contador_tapas_8 +=1;
   }
   if (contador_tapas_1 == 2000) {
