@@ -50,7 +50,6 @@ int cientochentagrados = 2400;
 int pinservo_contenedor = 3;
 int cerogrados1 = 350;
 int cientochentagrados1 = 2350;
-int pos = 0;
 
 void setup() {
   //--ASIGNO PIN A LED, BOTON Y MOTOR DC--//
