@@ -1,34 +1,23 @@
-//MOTOR PASO A PASO
-/*
- Stepper Motor Control - one revolution
- This program drives a unipolar or bipolar stepper motor.
- The motor is attached to digital pins 8 - 11 of the Arduino.
- The motor should revolve one revolution in one direction, then
- one revolution in the other direction.
- */
-
 #include <Stepper.h>
 
-const int stepsPerRevolution = 64*64;  // change this to fit the number of steps per revolution
+// change this to the number of steps on your motor
+#define STEPS 100
+int giro_completo = 2048;
 
-// initialize the stepper library on pins 8 through 11:
-Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11);
+// create an instance of the stepper class, specifying
+// the number of steps of the motor and the pins it's
+// attached to
+Stepper stepper(STEPS, 6, 7, 8, 9);
+
+// the previous reading from the analog input
+int previous = 0;
 
 void setup() {
-  // set the speed at 15 rpm:
-  myStepper.setSpeed(6);
-  // initialize the serial port:
-  Serial.begin(9600);
+  // set the speed of the motor to 30 RPMs
+  stepper.setSpeed(300);
 }
 
 void loop() {
-  // step one revolution  in one direction:
-  Serial.println("clockwise");
-  myStepper.step(stepsPerRevolution);
-  delay(500);
-
-  // step one revolution in the other direction:
-  Serial.println("counterclockwise");
-  myStepper.step(-stepsPerRevolution);
-  delay(500);
+  stepper.step(giro_completo);
+  delay(100);
 }
