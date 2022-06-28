@@ -56,6 +56,10 @@ int pinservo_contenedor = 3;
 int cerogrados1 = 350;
 int cientochentagrados1 = 2350;
 
+int pinservo_tolva = 1;
+int cerogrados2 = 400;
+int cientochentagrados2 = 2350;
+
 //----ASIGNACION MOTOR PAP----//
 Stepper stepper(STEPS, 6, 7, 8, 9);
 
@@ -64,13 +68,14 @@ void setup() {
   pinMode(13, OUTPUT); // LED ROJO
   pinMode(12, OUTPUT); // LED VERDE
   pinMode(10, OUTPUT); // BOTON
-  pinMode(9, OUTPUT); // MOTOR DC
+  pinMode(3, OUTPUT); // MOTOR DC
 
   //----ESTABLEZCO VELOCIDAD MOTOR PAP----//
+  analogWrite(9, 100);
   stepper.setSpeed(250);
   
   //--ASIGNO PIN A LOS SERVOS--//
-  servo_tolva.attach(1);
+  servo_tolva.attach(pinservo_tolva, cerogrados2, cientochentagrados2);
   servo_varilla.attach(pinservo_varilla, cerogrados, cientochentagrados);
   servo_contenedor.attach(pinservo_contenedor, cerogrados1, cientochentagrados1);
   
