@@ -5,8 +5,8 @@
 #include <Stepper.h>
 
 //----ASIGNACION MOTOR PAP----//
-#define STEPS 100
-Stepper stepper(STEPS, 1, 2, 3, 4);
+#define steps 2048
+Stepper stepper(steps, 3, 5, 4, 6);
 
 //---- ASIGNANDO LOS SERVOS ----//
 Servo servo_tolva;
@@ -86,10 +86,10 @@ void setup() {
   pinMode(12, OUTPUT); // LED VERDE
   pinMode(10, OUTPUT); // BOTON
   pinMode(7, OUTPUT); // MOTOR DC
-  pinMode(pinbuzzer, OUTPUT); // BUZZER
+  pinMode(11, OUTPUT); // BUZZER
 
   //----ESTABLEZCO VELOCIDAD MOTOR PAP----//
-  stepper.setSpeed(250);
+  stepper.setSpeed(18);
   
   //--ASIGNO PIN A LOS SERVOS--//
   servo_tolva.attach(pinservo_tolva, cerogrados2, cientochentagrados2);
@@ -116,13 +116,16 @@ void setup() {
 }
 
 void loop() {
-  analogWrite(12, HIGH);
+  digitalWrite(12, HIGH);
+  servo_varilla.write(0);
+  servo_contenedor.write(180);
+  servo_tolva.write(0);
   
   float red, green, blue;
   
   tcs.setInterrupt(false);  // turn on LED
 
-  delay(60);  // takes 50ms to read
+  delay(100);  // takes 50ms to read
 
   tcs.getRGB(&red, &green, &blue);
   
@@ -159,7 +162,7 @@ void loop() {
     servo_tolva.write(close);
     delay(3000);
   }
-    while ((rojo > 150 and rojo < 185) and (verde > 70 and verde < 100) and (azul > 35 and azul < 65)) {
+    if ((rojo > 150 and rojo < 185) and (verde > 70 and verde < 100) and (azul > 35 and azul < 65)) {
       
         tcs.getRGB(&red, &green, &blue);
   
@@ -291,9 +294,11 @@ void loop() {
   else {
 
      //MOTOR PASO A PASO GIRA PARA EL OTRO SENTIDO//
-     //stepper.step(-giro_completo);
-       delay(100);
-      contador_tapas_8 +=1;
+     Serial.println("holas");
+     
+     stepper.step(-giro_completo);
+     delay(100);
+     contador_tapas_8 +=1;
   }
   if (contador_tapas_1 == 150) {
       while (digitalRead(10) == LOW) {
@@ -383,5 +388,5 @@ void loop() {
           }
       contador_tapas_8 = 0;
       }
-
+  delay(200);
 }
