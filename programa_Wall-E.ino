@@ -116,6 +116,8 @@ void setup() {
 }
 
 void loop() {
+  analogWrite(12, HIGH);
+  
   float red, green, blue;
   
   tcs.setInterrupt(false);  // turn on LED
@@ -293,7 +295,7 @@ void loop() {
        delay(100);
       contador_tapas_8 +=1;
   }
-  if (contador_tapas_1 == 2000) {
+  if (contador_tapas_1 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
@@ -304,7 +306,7 @@ void loop() {
           }
       contador_tapas_1 = 0;
       }
-   if (contador_tapas_2 == 2000) {
+   if (contador_tapas_2 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
@@ -315,7 +317,7 @@ void loop() {
           }
       contador_tapas_2 = 0;
       }
-    if (contador_tapas_3 == 2000) {
+    if (contador_tapas_3 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
@@ -326,7 +328,7 @@ void loop() {
           }
       contador_tapas_3 = 0;
       }
-    if (contador_tapas_4 == 2000) {
+    if (contador_tapas_4 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
@@ -337,7 +339,7 @@ void loop() {
           }
       contador_tapas_4 = 0;
       }
-    if (contador_tapas_5 == 2000) {
+    if (contador_tapas_5 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
@@ -348,7 +350,7 @@ void loop() {
           }
       contador_tapas_5 = 0;
       }
-    if (contador_tapas_6 == 2000) {
+    if (contador_tapas_6 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
@@ -359,7 +361,7 @@ void loop() {
           }
       contador_tapas_6 = 0;
       }
-    if (contador_tapas_7 == 2000) {
+    if (contador_tapas_7 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
@@ -370,7 +372,7 @@ void loop() {
           }
       contador_tapas_7 = 0;
       }
-    if (contador_tapas_8 == 2000) {
+    if (contador_tapas_8 == 150) {
       while (digitalRead(10) == LOW) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
