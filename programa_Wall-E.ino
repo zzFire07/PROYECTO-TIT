@@ -17,10 +17,10 @@ int pos = 0; // VARIABLE DE MOVIMIENTO DE LOS SERVOS VARILLA Y CONTENEDOR.
 int open = 0; // MOVIMIENTO PARA ABRIR FLUJO DE TAPAS EN LA TOLVA
 int close = 180; // MOVIMIENTO PARA CERRAR FLUJO DE TAPAS EN LA TOLVA
 
-float grupo2 = 2; // "amarillo"
-float grupo5 = 5; // "blanco"
-float grupo6 = 6; // "gris"
-float grupo7 = 7; // "negro"
+int grupo2 = 2; // "amarillo"
+int grupo5 = 5; // "blanco"
+int grupo6 = 6; // "gris"
+int grupo7 = 7; // "negro"
 
 int sensor = 0;
 //---- VARIABLES PARA MOVIMIENTO DE LOS MOTORES ----//
@@ -69,15 +69,6 @@ int cientochentagrados2 = 2350;
 int salida = 200;
 int pinbuzzer = 11;
 
-// Pick analog outputs, for the UNO these three work well
-// use ~560  ohm resistor between Red & Blue, ~1K for green (its brighter)
-#define redpin 3
-#define greenpin 5
-#define bluepin 6
-
-// our RGB -> eye-recognized gamma color
-byte gammatable[256];
-
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 
 void setup() {
@@ -98,38 +89,22 @@ void setup() {
   
   //--INICIO TERMINAL SERIAL--//
   Serial.begin(9600);
-
-  if (tcs.begin()) {
-    Serial.println("Found sensor");
-  } else {
-    Serial.println("No TCS34725 found ... check your connections");
-    while (1); // halt!
-  }
-
-  for (int i=0; i<256; i++) {
-    float x = i;
-    x /= 255;
-    x = pow(x, 2.5);
-    x *= 255;
-    gammatable[i] = x;
-  }
+  
+//  if (tcs.begin()) {
+//    Serial.println("Found sensor");
+//  } else {
+//    Serial.println("No TCS34725 found ... check your connections");
+//    while (1); // halt!
+//  }
+  
 }
 
 void loop() {
   digitalWrite(12, HIGH);
-  servo_varilla.write(0);
-  servo_contenedor.write(180);
-  servo_tolva.write(0);
   
   float red, green, blue;
-  
-  tcs.setInterrupt(false);  // turn on LED
-
-  delay(100);  // takes 50ms to read
 
   tcs.getRGB(&red, &green, &blue);
-  
-  tcs.setInterrupt(true);  // turn off LED
 
   uint32_t sum = (red+green+blue)/3;
   
@@ -144,16 +119,6 @@ void loop() {
   Serial.print("\tG:\t"); Serial.print(verde); 
   Serial.print("\tB:\t"); Serial.print(azul);
   Serial.print("\n");
-
-#if defined(ARDUINO_ARCH_ESP32)
-  ledcWrite(1, gammatable[(int)red]);
-  ledcWrite(2, gammatable[(int)green]);
-  ledcWrite(3, gammatable[(int)blue]);
-#else
-  analogWrite(redpin, gammatable[(int)red]);
-  analogWrite(greenpin, gammatable[(int)green]);
-  analogWrite(bluepin, gammatable[(int)blue]);
-#endif
 
   if ((rojo > 150 and rojo < 185) and (verde > 70 and verde < 100) and (azul > 35 and azul < 65)) {
     Serial.print("HOLA");
@@ -295,7 +260,6 @@ void loop() {
 
      //MOTOR PASO A PASO GIRA PARA EL OTRO SENTIDO//
      Serial.println("holas");
-     
      stepper.step(-giro_completo);
      delay(100);
      contador_tapas_8 +=1;
@@ -388,5 +352,4 @@ void loop() {
           }
       contador_tapas_8 = 0;
       }
-  delay(200);
 }
