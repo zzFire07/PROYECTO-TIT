@@ -14,8 +14,8 @@ Servo servo_varilla;
 Servo servo_contenedor;
 
 int pos = 0; // VARIABLE DE MOVIMIENTO DE LOS SERVOS VARILLA Y CONTENEDOR.
-int open = 0; // MOVIMIENTO PARA ABRIR FLUJO DE TAPAS EN LA TOLVA
-int close = 180; // MOVIMIENTO PARA CERRAR FLUJO DE TAPAS EN LA TOLVA
+int close = 0; // MOVIMIENTO PARA ABRIR FLUJO DE TAPAS EN LA TOLVA
+int open = 180; // MOVIMIENTO PARA CERRAR FLUJO DE TAPAS EN LA TOLVA
 
 int grupo2 = 2; // "amarillo"
 int grupo5 = 5; // "blanco"
@@ -47,7 +47,7 @@ int contador_tapas_8 = 0;  // TAPAS NO CLASIFICADAS CORRECTAMENTE //
 //----ASIGNACION SERVOS----//
 int pinservo_varilla = 10;
 int cerogrados = 400;
-int cientochentagrados = 2400;
+int cientochentagrados = 2350;
 
 int pinservo_contenedor = 9;
 int cerogrados1 = 350;
@@ -68,6 +68,8 @@ int cientochentagrados2 = 2350;
 //----FRECUENCIA DEL BUZZER----//
 int salida = 200;
 int pinbuzzer = 11;
+//----ASIGNACION DEL BOTON----///
+int pinboton = 2; //PIN CONECTADO AL BOTON
 
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 
@@ -75,9 +77,10 @@ void setup() {
   //--ASIGNO PIN A LED, BOTON Y MOTOR DC--//
   pinMode(13, OUTPUT); // LED ROJO
   pinMode(12, OUTPUT); // LED VERDE
-  pinMode(10, OUTPUT); // BOTON
-  pinMode(7, OUTPUT); // MOTOR DC
   pinMode(11, OUTPUT); // BUZZER
+  pinMode(7, OUTPUT); // MOTOR DC
+  pinMode(pinboton, INPUT_PULLUP); // BOTON
+
 
   //----ESTABLEZCO VELOCIDAD MOTOR PAP----//
   stepper.setSpeed(18);
@@ -101,6 +104,10 @@ void setup() {
 
 void loop() {
   digitalWrite(12, HIGH);
+  digitalWrite(1, HIGH);
+  servo_contenedor.write(180);
+  servo_varilla.write(00);
+  servo_tolva.write(close);
   
   float red, green, blue;
 
@@ -120,33 +127,28 @@ void loop() {
   Serial.print("\tB:\t"); Serial.print(azul);
   Serial.print("\n");
 
-  if ((rojo > 150 and rojo < 185) and (verde > 70 and verde < 100) and (azul > 35 and azul < 65)) {
-    Serial.print("HOLA");
+  if (1 == 1) {
+    Serial.println("PRIMER IF");
     servo_tolva.write(open);
-    delay(500);
+    delay(130);
     servo_tolva.write(close);
     delay(3000);
-  }
-    if ((rojo > 150 and rojo < 185) and (verde > 70 and verde < 100) and (azul > 35 and azul < 65)) {
-      
-        tcs.getRGB(&red, &green, &blue);
-  
-        uint32_t sum = (red+green+blue)/3;
-        
-        float r = red; r /= sum;
-        int rojo = r*100;
-        float g = green; g /= sum;
-        int verde = g*100;
-        float b = blue; b /= sum;
-        int azul = b*100;
-        
-        digitalWrite(13, HIGH);
-        digitalWrite(12, LOW);
-        analogWrite(pinbuzzer, salida);
-        delay(90);
-        analogWrite(pinbuzzer, 0);
-        delay(90);
-  }
+    
+//    while (digitalRead(pinboton) == 1) {
+//        
+//        digitalWrite(13, HIGH);
+//        digitalWrite(12, LOW);
+//        analogWrite(pinbuzzer, salida);
+//        delay(90);
+//        analogWrite(pinbuzzer, 0);
+//        delay(90);
+//        if (digitalRead(pinboton) == 0){
+//          digitalWrite(13, LOW);
+//          digitalWrite(12, HIGH);
+//        }
+//      }
+   }
+ 
   
   if ((rojo > 43 and rojo < 90) and (verde > 100 and g < 115) and (azul > 100 and azul < 160)) { // CHEQUEA COLOR AZUL
     stepper.step(giro_completo);
@@ -259,46 +261,58 @@ void loop() {
   else {
 
      //MOTOR PASO A PASO GIRA PARA EL OTRO SENTIDO//
-     Serial.println("holas");
-     stepper.step(-giro_completo);
-     delay(100);
-     contador_tapas_8 +=1;
+     Serial.println("NO CLASIFICADA");
+//     stepper.step(-giro_completo);
+     delay(10000);
+//     contador_tapas_8 +=1;
   }
   if (contador_tapas_1 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
           analogWrite(pinbuzzer, 0);
           delay(200);
           digitalWrite(12, LOW);
+          if (digitalRead(pinboton) == 0){
+          digitalWrite(13, LOW);
+          digitalWrite(12, HIGH);
+        }
           }
       contador_tapas_1 = 0;
       }
    if (contador_tapas_2 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
           analogWrite(pinbuzzer, 0);
           delay(200);
           digitalWrite(12, LOW);
+          if (digitalRead(pinboton) == 0){
+          digitalWrite(13, LOW);
+          digitalWrite(12, HIGH);
+        }
           }
       contador_tapas_2 = 0;
       }
     if (contador_tapas_3 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
           analogWrite(pinbuzzer, 0);
           delay(200);
           digitalWrite(12, LOW);
+          if (digitalRead(pinboton) == 0){
+          digitalWrite(13, LOW);
+          digitalWrite(12, HIGH);
+        }
           }
       contador_tapas_3 = 0;
       }
     if (contador_tapas_4 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
@@ -309,46 +323,62 @@ void loop() {
       contador_tapas_4 = 0;
       }
     if (contador_tapas_5 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
           analogWrite(pinbuzzer, 0);
           delay(200);
           digitalWrite(12, LOW);
+          if (digitalRead(pinboton) == 0){
+          digitalWrite(13, LOW);
+          digitalWrite(12, HIGH);
+        }
           }
       contador_tapas_5 = 0;
       }
     if (contador_tapas_6 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
           analogWrite(pinbuzzer, 0);
           delay(200);
           digitalWrite(12, LOW);
+          if (digitalRead(pinboton) == 0){
+          digitalWrite(13, LOW);
+          digitalWrite(12, HIGH);
+        }
           }
       contador_tapas_6 = 0;
       }
     if (contador_tapas_7 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
           analogWrite(pinbuzzer, 0);
           delay(200);
           digitalWrite(12, LOW);
+          if (digitalRead(pinboton) == 0){
+          digitalWrite(13, LOW);
+          digitalWrite(12, HIGH);
+        }
           }
       contador_tapas_7 = 0;
       }
     if (contador_tapas_8 == 150) {
-      while (digitalRead(10) == LOW) {
+      while (digitalRead(pinboton) == 1) {
           digitalWrite(13, HIGH);
           analogWrite(pinbuzzer, salida);
           delay(200);
           analogWrite(pinbuzzer, 0);
           delay(200);
           digitalWrite(12, LOW);
+          if (digitalRead(pinboton) == 0){
+          digitalWrite(13, LOW);
+          digitalWrite(12, HIGH);
+        }
           }
       contador_tapas_8 = 0;
       }
